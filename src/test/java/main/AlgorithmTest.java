@@ -24,8 +24,6 @@ public class AlgorithmTest {
         {1,0,0,0,1,1,0,0,0,0,1}};
 
 
-    
-
     @Test
     public void StraightTransitiveClosure_Refactor() {
         Algorithm alg=new Algorithm(standard11_matrix,1,11);
