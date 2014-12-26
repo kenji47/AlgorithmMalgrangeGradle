@@ -65,7 +65,7 @@ public class MainForm {
 
         table.setPreferredSize(new Dimension(400,400));
 
-        text_area=new JTextArea("guvjkhukhuk");
+        text_area=new JTextArea();
         text_area.setPreferredSize(new Dimension(400,400));
 
         jfrm.add(new JScrollPane(table));
@@ -77,11 +77,13 @@ public class MainForm {
 
         Algorithm alg=new Algorithm(matrix,vertex,size_matrix);
         System.out.println("OUTPUT");
-        for(int[] c: alg.output){
-            for(int t:c)
-                System.out.print(t);
+        for(StringBuilder c: alg.output){
+                System.out.print(c);
+            text_area.append(c.toString());
+            text_area.append("\n");
             System.out.println("");
         }
+
     }
 
     public static void main(String[] args) {
