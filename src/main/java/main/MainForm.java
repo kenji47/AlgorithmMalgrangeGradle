@@ -66,10 +66,13 @@ public class MainForm {
         table.setPreferredSize(new Dimension(400,400));
 
         text_area=new JTextArea();
-        text_area.setPreferredSize(new Dimension(400,400));
+        //text_area.setPreferredSize(new Dimension(400,400));
+
+        JScrollPane scrollPane =new JScrollPane(text_area);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 
         jfrm.add(new JScrollPane(table));
-        jfrm.add(new JScrollPane(text_area));
+        jfrm.add(scrollPane);
 
         jfrm.setLocationRelativeTo(null);
         jfrm.setVisible(true);
