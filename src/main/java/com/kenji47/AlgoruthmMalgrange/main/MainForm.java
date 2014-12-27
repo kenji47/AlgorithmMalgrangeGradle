@@ -15,15 +15,14 @@ public class MainForm extends JFrame {
 
         tab_pane=new JTabbedPane();
         //tab_pane.add("Поиск порожденных подграфов",);
-        //tab_pane.add("Метод Мальгранжа",);
+        tab_pane.add("Метод Мальгранжа",new MalgrangeTab());
 
-
+        add(tab_pane);
         setTitle("Теория графов и сетей");
         getContentPane().setLayout(new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-        add(tab_pane);
         pack();
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
