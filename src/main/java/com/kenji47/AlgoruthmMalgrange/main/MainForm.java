@@ -1,4 +1,4 @@
-package main;
+package com.kenji47.AlgoruthmMalgrange.main;
 
 import javax.swing.*;
 import javax.swing.table.JTableHeader;

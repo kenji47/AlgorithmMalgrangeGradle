@@ -1,4 +1,4 @@
-package main;
+package com.kenji47.AlgoruthmMalgrange.main;
 
 //import sun.plugin.javascript.navig.Array;
 

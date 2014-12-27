@@ -4,7 +4,7 @@ apply plugin: 'application'
 sourceCompatibility = 1.5
 version = '1.0'
 
-    mainClassName = "main.MainForm"
+mainClassName = "com.kenji47.AlgoruthmMalgrange.main.MainForm"
 
 jar{
     manifest.attributes("Main-Class": mainClassName);

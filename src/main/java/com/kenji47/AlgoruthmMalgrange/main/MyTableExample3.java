@@ -1,4 +1,4 @@
-package main;
+package com.kenji47.AlgoruthmMalgrange.main;
 import java.awt.Component;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
