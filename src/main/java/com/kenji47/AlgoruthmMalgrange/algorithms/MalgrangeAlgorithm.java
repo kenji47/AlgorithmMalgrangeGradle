@@ -1,4 +1,4 @@
-package com.kenji47.AlgoruthmMalgrange.main;
+package com.kenji47.AlgoruthmMalgrange.algorithms;
 
 //import sun.plugin.javascript.navig.Array;
 
@@ -8,7 +8,7 @@ import java.util.Arrays;
 /**
  * Created by Andrey on 26.12.2014.
  */
-class Algorithm {
+public class MalgrangeAlgorithm {
     int[][] matrix;
     int vertex;
     int size_matrix;
@@ -18,9 +18,9 @@ class Algorithm {
     boolean[] excludedVertex;
 
     int iteration=0;
-    ArrayList<StringBuilder> output;
+    public ArrayList<StringBuilder> output;
 
-    public Algorithm(int[][] m, int v, int s){
+    public MalgrangeAlgorithm(int[][] m, int v, int s){
         matrix=m;
         vertex=v;
         size_matrix=s;
