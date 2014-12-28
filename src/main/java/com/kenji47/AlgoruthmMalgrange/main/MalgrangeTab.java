@@ -1,12 +1,12 @@
 package com.kenji47.AlgoruthmMalgrange.main;
 
 import com.kenji47.AlgoruthmMalgrange.algorithms.MalgrangeAlgorithm;
+import com.sun.deploy.panel.JreTableModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,6 +18,7 @@ public class MalgrangeTab extends JPanel implements ActionListener {
     MainForm mainform;
 
     JTable table;
+    DefaultTableModel dtm;
     JLabel lbDefinition;
     JLabel lbGraphName;
     JLabel lbResult;
@@ -56,7 +57,7 @@ public class MalgrangeTab extends JPanel implements ActionListener {
         lbDefinition.setFont(font);
 
         lbStartVertex=new JLabel("Начальная вершина разбиения");
-        tfStartVertex=new JTextField();
+        tfStartVertex=new JTextField("1");
 
         lbGraphName=new JLabel("Матрица смежности графа");
         lbVertexQuantity=new JLabel("Размерность графа");
@@ -120,9 +121,9 @@ public class MalgrangeTab extends JPanel implements ActionListener {
         final JTableHeader header = table.getTableHeader();
         header.setDefaultRenderer(new HeaderRenderer(table));
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
-                getTableData(),
-                getTableHeader()));
+        dtm=new DefaultTableModel();
+        dtm.setDataVector(getTableData(),getTableHeader());
+        table.setModel(dtm);
 
         //table.setPreferredSize(new Dimension(400,400));
 
@@ -179,9 +180,8 @@ public class MalgrangeTab extends JPanel implements ActionListener {
 
     }
     private void fillTable(){
-        table.setModel(new javax.swing.table.DefaultTableModel(
-                getTableData(),
-                getTableHeader()));
+        dtm.setDataVector(getTableData(),getTableHeader());
+        table.setModel(dtm);
     }
     private void setMatrixEmpty(){
         matrix=new int[size_matrix][size_matrix];
@@ -192,12 +192,30 @@ public class MalgrangeTab extends JPanel implements ActionListener {
             }
         }
     }
+    private void getTableDataToMatrix(){
+        for (int n=0; n<size_matrix; n++){
+            for(int c=0; c<size_matrix; c++){
+                matrix[n][c]=Integer.parseInt(dtm.getValueAt(n,c+1).toString());
+
+            }
+        }
+
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
 
         switch (e.getActionCommand()){
             case "Solve":
                 text_area.setText("");
+                getTableDataToMatrix();
+
+                for(int n=0; n<size_matrix; n++) {
+                    for (int c = 0; c < size_matrix; c++){
+                        System.out.print(matrix[n][c]);
+                    }
+                    System.out.println();
+                }
                 MalgrangeAlgorithm alg=new MalgrangeAlgorithm(matrix,Integer.parseInt(tfStartVertex.getText()),size_matrix);
                 System.out.println("OUTPUT");
                 for(StringBuilder c: alg.output){
@@ -251,14 +269,6 @@ public class MalgrangeTab extends JPanel implements ActionListener {
                 object[n][t+1]=matrix[n][t];
             }
         }
-
-//        for(int n=0; n<size_matrix; n++){
-//            for(int t=0; t<size_matrix; t++){
-//                System.out.print(object[n][t]+" ");
-//            }
-//            System.out.println();
-//        }
-
         return object;
     }
     String[] getTableHeader(){
