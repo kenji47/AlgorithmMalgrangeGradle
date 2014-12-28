@@ -53,20 +53,20 @@ public class MalgrangeAlgorithm {
         }
         if(check) {
             iteration++;
-            output.add(new StringBuilder("ITERATION: "+iteration));
-            output.add(new StringBuilder(("Variable: "+"x"+v)));
+            output.add(new StringBuilder("ШАГ: "+iteration));
+            output.add(new StringBuilder(("Вершина разбиения: "+"x"+v)));
             resetTransitiveClosure();
             fillStraightTransitiveClosure(v,excl);
-            addOutput("STC", straightTC);
+            addOutput("Прямое транзитивное замыкание", straightTC);
 
             fillReverseTransitiveClosure(v,excl);
-            addOutput("RTC", reverseTC);
+            addOutput("Обратное транзитивное замыкание", reverseTC);
 
             boolean[] in = getIntersection(straightTC, reverseTC);
-            addOutput("Intersection", in);
+            addOutput("Максимально сильно связный подграф", in);
 
             boolean[] ex = getExcludedVertex(in, excl);
-            addOutput("Excluded", ex);
+            addOutput("Новый граф", ex);
 
             int tempInt = -1;
             for (int n = 1; n < size_matrix + 1; n++) {

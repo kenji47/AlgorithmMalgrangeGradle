@@ -3,22 +3,40 @@ package com.kenji47.AlgoruthmMalgrange.main;
 import com.kenji47.AlgoruthmMalgrange.algorithms.MalgrangeAlgorithm;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by Andrey on 27.12.2014.
  */
-public class MalgrangeTab extends JPanel {
+public class MalgrangeTab extends JPanel implements ActionListener {
+    MainForm mainform;
+
     JTable table;
+    JLabel lbDefinition;
+    JLabel lbGraphName;
+    JLabel lbResult;
+    JLabel lbVertexQuantity;
+    JLabel lbStartVertex;
+    JTextField tfStartVertex;
+
+    JButton btRandomFill;
+    JButton btSolve;
+
+    JTextField tfVertexQuantity;
+
     JTextArea text_area;
 
     int[][] matrix;
     int vertex;
-    int size_matrix=11;
-    public MalgrangeTab(){
-
+    int size_matrix;
+    public MalgrangeTab(MainForm mainForm){
+        mainform=mainForm;
         matrix=new int[][]{
                 {0,0,0,0,0,0,1,0,0,0,0},
                 {1,1,0,0,0,0,0,1,0,0,1},
@@ -31,10 +49,56 @@ public class MalgrangeTab extends JPanel {
                 {0,0,1,0,0,0,0,0,0,0,0},
                 {1,0,0,1,1,0,0,0,1,0,0},
                 {1,0,0,0,1,1,0,0,0,0,1}};
-        vertex=1;
+        //vertex=1;
 
+        lbDefinition=new JLabel("Описание: поэтапное разбиение графа на максимальные сильно связные подграфы методом Мальгранжа");
+        Font font=new Font("Colibri", 0,18);
+        lbDefinition.setFont(font);
 
-        //setLayout(new BoxLayout(this.getContentPane(), javax.swing.BoxLayout.Y_AXIS));
+        lbStartVertex=new JLabel("Начальная вершина разбиения");
+        tfStartVertex=new JTextField();
+
+        lbGraphName=new JLabel("Матрица смежности графа");
+        lbVertexQuantity=new JLabel("Размерность графа");
+        tfVertexQuantity=new JTextField();
+        tfVertexQuantity.setText("5");
+        size_matrix=Integer.parseInt(tfVertexQuantity.getText());
+        setMatrixEmpty();
+
+        tfVertexQuantity.addActionListener(this);
+        tfVertexQuantity.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                size_matrix=Integer.parseInt(tfVertexQuantity.getText());
+                setMatrixEmpty();
+                fillTable();
+                //table.repaint();
+                System.out.println("!");
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                size_matrix=Integer.parseInt(tfVertexQuantity.getText());
+                setMatrixEmpty();
+                fillTable();
+                System.out.println("!");
+            }
+        });
+
+        lbResult=new JLabel("Результат расчетов");
+
+        btRandomFill=new JButton("Заполнить граф случайно");
+        btRandomFill.setActionCommand("RandomFill");
+        btRandomFill.addActionListener(this);
+
+        btSolve=new JButton("Решить");
+        btSolve.setActionCommand("Solve");
+        btSolve.addActionListener(this);
 
 
         table = new javax.swing.JTable() {
@@ -51,6 +115,7 @@ public class MalgrangeTab extends JPanel {
                 }
             }
         };
+
         table.setAutoCreateRowSorter(false);
         final JTableHeader header = table.getTableHeader();
         header.setDefaultRenderer(new HeaderRenderer(table));
@@ -59,31 +124,108 @@ public class MalgrangeTab extends JPanel {
                 getTableData(),
                 getTableHeader()));
 
-        table.setPreferredSize(new Dimension(400,400));
+        //table.setPreferredSize(new Dimension(400,400));
+
+
 
         text_area=new JTextArea();
-        //text_area.setPreferredSize(new Dimension(400,400));
 
         JScrollPane scrollPane =new JScrollPane(text_area);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        setLayout(new BoxLayout(this,javax.swing.BoxLayout.Y_AXIS));
+        scrollPane.setPreferredSize(new Dimension(400,600));
 
-        add(new JScrollPane(table));
+        add(Box.createRigidArea(new Dimension(0, 10)));
+        add(lbDefinition);
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+        JPanel panel=new JPanel();
+        panel.setLayout(new GridLayout(3, 2, 10, 10));
+        panel.add(lbVertexQuantity);
+        panel.add(tfVertexQuantity);
+        panel.add(lbStartVertex);
+        panel.add(tfStartVertex);
+        panel.add(btRandomFill);
+        panel.add(btSolve);
+
+        add(panel);
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+        add(lbGraphName);
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+
+        JScrollPane scrollPane2 =new JScrollPane(table);
+
+        add(scrollPane2);
+        //add(new JScrollPane(table));
+        add(Box.createRigidArea(new Dimension(0,10)));
+
+        add(lbResult);
+        add(Box.createRigidArea(new Dimension(0,10)));
         add(scrollPane);
 
-        //jfrm.setLocationRelativeTo(null);
-        //jfrm.setVisible(true);
 
 
-        MalgrangeAlgorithm alg=new MalgrangeAlgorithm(matrix,vertex,size_matrix);
-        System.out.println("OUTPUT");
-        for(StringBuilder c: alg.output){
-            System.out.print(c);
-            text_area.append(c.toString());
-            text_area.append("\n");
-            System.out.println("");
+
+//        MalgrangeAlgorithm alg=new MalgrangeAlgorithm(matrix,vertex,size_matrix);
+//        System.out.println("OUTPUT");
+//        for(StringBuilder c: alg.output){
+//            System.out.print(c);
+//            text_area.append(c.toString());
+//            text_area.append("\n");
+//            System.out.println("");
+//        }
+
+    }
+    private void fillTable(){
+        table.setModel(new javax.swing.table.DefaultTableModel(
+                getTableData(),
+                getTableHeader()));
+    }
+    private void setMatrixEmpty(){
+        matrix=new int[size_matrix][size_matrix];
+        for(int n=0; n<size_matrix; n++){
+            for(int c=0; c<size_matrix; c++)
+            {
+                 matrix[n][c]=0;
+            }
+        }
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+
+        switch (e.getActionCommand()){
+            case "Solve":
+                text_area.setText("");
+                MalgrangeAlgorithm alg=new MalgrangeAlgorithm(matrix,Integer.parseInt(tfStartVertex.getText()),size_matrix);
+                System.out.println("OUTPUT");
+                for(StringBuilder c: alg.output){
+                    System.out.print(c);
+                    text_area.append(c.toString());
+                    text_area.append("\n");
+                    System.out.println("");
+                }
+
+                break;
+            case "RandomFill":
+                double d;
+                for(int n=0; n<size_matrix; n++){
+                    for(int c=0; c<size_matrix; c++)
+                    {
+
+                        d=Math.random();
+                        if(d<=0.5) matrix[n][c]=0;
+                        else matrix[n][c]=1;
+                    }
+                }
+                fillTable();
+
+                break;
         }
 
     }
+
     private static class HeaderRenderer implements TableCellRenderer {
 
         TableCellRenderer renderer;
