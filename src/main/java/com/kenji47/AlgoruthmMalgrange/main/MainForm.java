@@ -15,7 +15,7 @@ public class MainForm extends JFrame {
     public MainForm() {
 
         tab_pane=new JTabbedPane();
-        tab_pane.add("Поиск порожденных подграфов",new GeneratedSubgraphSearch());
+        tab_pane.add("Поиск порожденных подграфов",new GeneratedSubgraphTab());
         tab_pane.add("Метод Мальгранжа",new MalgrangeTab(this));
 
         add(tab_pane);

@@ -1,24 +1,24 @@
 package com.kenji47.AlgoruthmMalgrange.main;
 
 import com.kenji47.AlgoruthmMalgrange.algorithms.MalgrangeAlgorithm;
-import com.sun.deploy.panel.JreTableModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * Created by Andrey on 27.12.2014.
+ * Created by Andrey on 28.12.2014.
  */
-public class MalgrangeTab extends JPanel implements ActionListener {
-    MainForm mainform;
-
+public class GeneratedSubgraphTab extends JPanel implements ActionListener {
     JTable table;
     DefaultTableModel dtm;
+
     JLabel lbDefinition;
     JLabel lbGraphName;
     JLabel lbResult;
@@ -36,8 +36,8 @@ public class MalgrangeTab extends JPanel implements ActionListener {
     int[][] matrix;
     int vertex;
     int size_matrix;
-    public MalgrangeTab(MainForm mainForm){
-        mainform=mainForm;
+
+    public  GeneratedSubgraphTab(){
         matrix=new int[][]{
                 {0,0,0,0,0,0,1,0,0,0,0},
                 {1,1,0,0,0,0,0,1,0,0,1},
@@ -52,7 +52,7 @@ public class MalgrangeTab extends JPanel implements ActionListener {
                 {1,0,0,0,1,1,0,0,0,0,1}};
         //vertex=1;
 
-        lbDefinition=new JLabel("Описание: поэтапное разбиение графа на максимальные сильно связные подграфы методом Мальгранжа");
+        lbDefinition=new JLabel("Описание: поиск порожденных графов");
         Font font=new Font("Colibri", 0,18);
         lbDefinition.setFont(font);
 
@@ -189,7 +189,7 @@ public class MalgrangeTab extends JPanel implements ActionListener {
         for(int n=0; n<size_matrix; n++){
             for(int c=0; c<size_matrix; c++)
             {
-                 matrix[n][c]=0;
+                matrix[n][c]=0;
             }
         }
     }
@@ -205,7 +205,6 @@ public class MalgrangeTab extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         switch (e.getActionCommand()){
             case "Solve":
                 text_area.setText("");
@@ -241,10 +240,8 @@ public class MalgrangeTab extends JPanel implements ActionListener {
                 fillTable();
 
                 break;
-        }
-
     }
-
+    }
     private static class HeaderRenderer implements TableCellRenderer {
 
         TableCellRenderer renderer;
@@ -279,5 +276,4 @@ public class MalgrangeTab extends JPanel implements ActionListener {
 
         return header;
     }
-
 }
