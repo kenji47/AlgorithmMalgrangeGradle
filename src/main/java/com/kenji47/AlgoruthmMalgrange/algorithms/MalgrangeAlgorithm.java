@@ -4,12 +4,13 @@ package com.kenji47.AlgoruthmMalgrange.algorithms;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * Created by Andrey on 26.12.2014.
  */
 public class MalgrangeAlgorithm {
-    ArrayList<Integer> arrayList = new ArrayList<>();
+    HashMap map;
     int[][] matrix;
     int vertex;
     int size_matrix;
