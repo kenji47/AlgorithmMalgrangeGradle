@@ -9,6 +9,7 @@ import java.util.Arrays;
  * Created by Andrey on 26.12.2014.
  */
 public class MalgrangeAlgorithm {
+    double[][] doubleMatrix;
     int[][] matrix;
     int vertex;
     int size_matrix;
